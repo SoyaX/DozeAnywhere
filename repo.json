@@ -12,8 +12,8 @@
         "IsHide": "False",
         "IsTestingExclusive": "False",
         "DownloadCount": 0,
-        "DownloadLinkInstall": "https://raw.githubusercontent.com/SoyaX/DozeAnywhere/main/latest.zip",
-        "DownloadLinkTesting": "https://raw.githubusercontent.com/SoyaX/DozeAnywhere/main/latest.zip",
-        "DownloadLinkUpdate": "https://raw.githubusercontent.com/SoyaX/DozeAnywhere/main/latest.zip"
+        "DownloadLinkInstall": "https://raw.githubusercontent.com/SoyaX/DozeAnywhere/master/latest.zip",
+        "DownloadLinkTesting": "https://raw.githubusercontent.com/SoyaX/DozeAnywhere/master/latest.zip",
+        "DownloadLinkUpdate": "https://raw.githubusercontent.com/SoyaX/DozeAnywhere/master/latest.zip"
     }
 ]
