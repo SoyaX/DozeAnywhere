@@ -1,0 +1,8 @@
+{
+  "Author": "SoyaX",
+  "Name": "Doze Anywhere",
+  "Punchline": "Anywhere is a bed, if you want it to be.",
+  "Description": "/dozeanywhere [nosnap]",
+  "InternalName": "DozeAnywhere",
+  "ApplicableVersion": "any"
+}
