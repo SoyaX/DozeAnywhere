@@ -33,11 +33,16 @@ public sealed unsafe class Plugin : IDalamudPlugin {
         CommandManager.AddHandler("/dozeanywhere", new CommandInfo(DozeAnywhere) {
             HelpMessage = "Doze as if on a bed, even with no bed around. Use '/dozeanywhere nosnap' to disable snapping"
         });
+
+        CommandManager.AddHandler("/sitanywhere", new CommandInfo(SitAnywhere) {
+            HelpMessage = "Sit as if on a chair, even with no chair around."
+        });
     }
 
     public void Dispose() {
         ShouldSnapHook?.Dispose();
         CommandManager.RemoveHandler("/dozeanywhere");
+        CommandManager.RemoveHandler("/sitanywhere");
     }
 
     private void DozeAnywhere(string command, string args) {
@@ -45,5 +50,10 @@ public sealed unsafe class Plugin : IDalamudPlugin {
         if (args.Contains("nosnap", StringComparison.InvariantCultureIgnoreCase)) suppressedSnap = true;
         useEmote(new IntPtr(agent), 88, IntPtr.Zero, 0, 0);
         suppressedSnap = false;
+    }
+
+    private void SitAnywhere(string command, string args) {
+        var agent = AgentModule.Instance()->GetAgentByInternalId(AgentId.Emote);
+        useEmote(new IntPtr(agent), 96, IntPtr.Zero, 0, 0);
     }
 }
