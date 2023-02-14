@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Dalamud.Game.Command;
 using Dalamud.Hooking;
 using Dalamud.IoC;
@@ -19,9 +19,13 @@ public sealed unsafe class Plugin : IDalamudPlugin {
     [Signature("E8 ?? ?? ?? ?? 84 C0 74 44 4C 8D 6D C7", DetourName = nameof(ShouldSnapDetour))]
     private Hook<ShouldSnap>? ShouldSnapHook { get; init; } = null;
     
+    [Signature("48 83 EC 38 F3 0F 10 05 ?? ?? ?? ?? 45 33 C9", DetourName = nameof(ShouldSnapUnsitDetour))]
+    private Hook<ShouldSnap>? ShouldSnapUnsitHook { get; init; } = null!;
+
     private bool suppressedSnap;
     
     private byte ShouldSnapDetour(float* a1, float* a2) => (byte) (suppressedSnap ? 0 : ShouldSnapHook!.Original(a1, a2));
+    private byte ShouldSnapUnsitDetour(float* a1, float* a2) => 0;
     
     [PluginService] public static CommandManager CommandManager { get; private set; } = null!;
 
@@ -29,6 +33,7 @@ public sealed unsafe class Plugin : IDalamudPlugin {
     public Plugin() {
         SignatureHelper.Initialise(this);
         ShouldSnapHook?.Enable();
+        ShouldSnapUnsitHook?.Enable();
 
         CommandManager.AddHandler("/dozeanywhere", new CommandInfo(DozeAnywhere) {
             HelpMessage = "Doze as if on a bed, even with no bed around. Use '/dozeanywhere nosnap' to disable snapping"
@@ -41,6 +46,7 @@ public sealed unsafe class Plugin : IDalamudPlugin {
 
     public void Dispose() {
         ShouldSnapHook?.Dispose();
+        ShouldSnapUnsitHook?.Dispose();
         CommandManager.RemoveHandler("/dozeanywhere");
         CommandManager.RemoveHandler("/sitanywhere");
     }
