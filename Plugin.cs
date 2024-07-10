@@ -13,12 +13,12 @@ using FFXIVClientStructs.FFXIV.Common.Math;
 namespace DozeAnywhere;
 
 public sealed unsafe class Plugin : IDalamudPlugin {
-    [Signature("E8 ?? ?? ?? ?? 4C 8B 74 24 ?? 48 8B CE E8")]
+    [Signature("E8 ?? ?? ?? ?? 40 84 ED 74 ?? 48 8B 4B ?? 48 8B 01 FF 90")]
     private readonly delegate* unmanaged<IntPtr, ushort, IntPtr, byte, byte, void> useEmote = null!;
     
     private delegate byte ShouldSnap(Character* a1, SnapPosition* a2);
     
-    [Signature("E8 ?? ?? ?? ?? 84 C0 74 44 4C 8D 6D C7", DetourName = nameof(ShouldSnapDetour))]
+    [Signature("E8 ?? ?? ?? ?? 84 C0 0F 84 ?? ?? ?? ?? 4C 8D 74 24", DetourName = nameof(ShouldSnapDetour))]
     private Hook<ShouldSnap>? ShouldSnapHook { get; init; } = null;
     
     [Signature("48 83 EC 38 F3 0F 10 05 ?? ?? ?? ?? 45 33 C9", DetourName = nameof(ShouldSnapUnsitDetour))]
