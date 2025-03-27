@@ -27,7 +27,7 @@ jobs:
         run: msbuild DozeAnywhere.sln /p:Configuration=Release
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: latest
           path: ./bin/x64/Release
