@@ -54,6 +54,7 @@ public sealed unsafe class Plugin : IDalamudPlugin {
     
     [PluginService] public static ICommandManager CommandManager { get; private set; } = null!;
     [PluginService] public static IClientState ClientState { get; private set; } = null!;
+    [PluginService] public static IObjectTable ObjectTable { get; private set; } = null!;
     [PluginService] public static IGameInteropProvider GameInteropProvider { get; private set; } = null!;
 
     [StructLayout(LayoutKind.Explicit, Size = 0x38)]
@@ -103,7 +104,7 @@ public sealed unsafe class Plugin : IDalamudPlugin {
     }
 
     private void SitAnywhere(string command, string args) {
-        var player = (Character*) (ClientState.LocalPlayer?.Address ?? nint.Zero);
+        var player = (Character*) (ObjectTable.LocalPlayer?.Address ?? nint.Zero);
         if (player == null) return;
         saveSitPosition = new System.Numerics.Vector3(player->GameObject.Position.X, player->GameObject.Position.Y, player->GameObject.Position.Z);
         saveSitRotation = player->GameObject.Rotation;
